@@ -380,8 +380,120 @@ cy.get('.item').then($el => {
 ```
 
 
+---
+
+Let’s gooo! 🎣 Time to master Hooks in Cypress — they make your tests cleaner, organized, and DRY (Don't Repeat Yourself).
+
+### 🎯 1. What are Hooks?
+Hooks in Cypress are special functions that run before or after your tests.
+They're used for setup and teardown — like logging in, resetting a DB, or visiting a page.
+
+Think of it like:
+
+-"Before every test, go to the login page"
+-"After all tests, log something"
+
+---
+
+## 🧪 2. The 4 Main Hooks
+
+| Hook | When it Runs | Use Case | Example |
+|------|--------------|----------|---------|
+| `before()` | Once before all tests | Global setup | Login, seed test database |
+| `beforeEach()` | Before every test case | Test preparation | Visit page, reset application state |
+| `afterEach()` | After every test case | Cleanup | Take screenshot, clear cookies |
+| `after()` | Once after all tests | Final teardown | Logout, generate reports |
+
+---
+
+## 🧠 3. Basic Examples
+
+- Example 1 :
+  
+```js
+describe('User Dashboard', () => {
+  before(() => {
+    cy.login('admin@test.com', 'password123') // Runs once
+  })
+
+  beforeEach(() => {
+    cy.visit('/dashboard') // Runs before each test
+  })
+
+  afterEach(() => {
+    cy.clearLocalStorage() // Runs after each test
+  })
+
+  after(() => {
+    cy.logout() // Runs once at the end
+  })
+
+  it('should display welcome message', () => {
+    // Test code...
+  })
+})
+```
 
 
+- Example 2 :
 
+```js
+describe('Login Flow', () => {
 
+  before(() => {
+    // Runs ONCE before all tests
+    cy.log('🌟 Start Login Test Suite')
+  })
 
+  beforeEach(() => {
+    // Runs BEFORE EACH test
+    cy.visit('/login')
+  })
+
+  it('logs in with valid credentials', () => {
+    cy.get('[data-cy="username-input"]').type('ramavtar')
+    cy.get('[data-cy="password-input"]').type('123456')
+    cy.get('[data-cy="submit-btn"]').click()
+    cy.get('[data-cy="welcome-msg"]').should('contain', 'Welcome')
+  })
+
+  it('shows error on invalid login', () => {
+    cy.get('[data-cy="username-input"]').type('wrong')
+    cy.get('[data-cy="password-input"]').type('wrong')
+    cy.get('[data-cy="submit-btn"]').click()
+    cy.get('[data-cy="error-msg"]').should('be.visible')
+  })
+
+  afterEach(() => {
+    // Runs AFTER EACH test
+    cy.log('✅ One test completed')
+  })
+
+  after(() => {
+    // Runs ONCE after all tests
+    cy.log('🏁 All tests done')
+  })
+
+})
+```
+
+---
+
+## 4. 🔥 Pro Tips
+
+-Use beforeEach() to visit the same page before each test.
+
+-Avoid doing everything inside before() — use it only for one-time setups.
+
+-Combine with fixtures, API calls, and custom commands for advanced setups.
+
+---
+
+## 5.💡 Summary Cheatsheet
+
+```js
+before(() => { /* once before all */ })
+beforeEach(() => { /* before every test */ })
+afterEach(() => { /* after every test */ })
+after(() => { /* once after all */ })
+```
