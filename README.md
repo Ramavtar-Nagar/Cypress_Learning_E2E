@@ -5,8 +5,9 @@ A quick and beginner-friendly guide to get started with **Cypress** for testing 
 ---
 
 
+# Basics ->
 
-## 🌀 1. What is Cypress?
+### 🌀 1. What is Cypress?
 
 Cypress is a **JavaScript-based test automation tool** used to test web applications.
 
@@ -22,7 +23,7 @@ It’s mainly used for **End-to-End (E2E)** testing, but also supports **integra
 ---
 
 
-## 🔥 2. Why Cypress?
+### 🔥 2. Why Cypress?
 
 - 💡 Easy to learn (if you know JavaScript)  
 - ⚡ Fast & Real-time reloads  
@@ -33,7 +34,7 @@ It’s mainly used for **End-to-End (E2E)** testing, but also supports **integra
 ---
 
 
-## 📦 3. How to Install Cypress
+### 📦 3. How to Install Cypress
 
 Run this in your project folder (Node.js required):
 
@@ -50,7 +51,7 @@ npx cypress open
 ---
 
 
-## 📁 4. Cypress Folder Structure
+### 📁 4. Cypress Folder Structure
 
 Once Cypress is opened, it creates a cypress/ folder with:
 
@@ -65,7 +66,7 @@ Once Cypress is opened, it creates a cypress/ folder with:
 ---
 
 
-## 🧪 5. Writing Your First Test
+### 🧪 5. Writing Your First Test
 
 - Inside cypress/e2e/sample.cy.js, try this:
 
@@ -82,7 +83,7 @@ describe('My First Test', () => {
 ---
 
 
-## 6. 🎬 After Writing Your First Cypress Test — What Next?
+## 🎬 After Writing Your First Cypress Test — What Next?
 
 Once you’ve written your test file (example: cypress/e2e/my_first_test.cy.js), you’ll need to go back to the Cypress GUI and run it.
 Here’s how it works:
@@ -148,7 +149,7 @@ You'll see:
 
 ---
 
-### 💡 Bonus Tip
+### 6.💡 Bonus Tip
 
 While it's running, you can **hover over each command** on the left — it will **highlight what was selected or clicked** in the browser view.
 
@@ -156,7 +157,7 @@ While it's running, you can **hover over each command** on the left — it will 
 
 ---
 
-## 🧪 Visual Summary
+### 7. 🧪 Visual Summary
 
 ```bash
 npx cypress open
@@ -173,14 +174,15 @@ Watch test run in browser!
 ---
 
 
+# Selectors ->
 
-# 🔍 Selectors & Best Practices in Cypress (Easy + Deep + Fast)
+## 🔍 Selectors & Best Practices in Cypress (Easy + Deep + Fast)
 
 A quick guide to mastering **element selection** in Cypress for reliable and maintainable tests.
 
 ---
 
-## ✅ 1. What are Selectors in Cypress?
+### ✅ 1. What are Selectors in Cypress?
 
 -Selectors are how you tell Cypress **which elements** to interact with on a webpage.
 
@@ -190,7 +192,7 @@ A quick guide to mastering **element selection** in Cypress for reliable and mai
 
 ---
 
-## 🧪 2. The Most Common Selectors in Cypress
+### 🧪 2. The Most Common Selectors in Cypress
 
 ```js
 cy.get('button')           // Select by HTML tag
@@ -202,7 +204,7 @@ cy.get('[data-cy="login"]') // 🏆 Best practice: data-cy selector
 
 --- 
 
-## 🧠 3. Best Practices for Selectors
+### 🧠 3. Best Practices for Selectors
 
 | DO ✅                          | DON'T ❌                              |
 |--------------------------------|--------------------------------------|
@@ -226,7 +228,7 @@ cy.get('[data-cy="login-btn"]').click()
 
 ---
 
-## 🧰 4. Real-World Example
+### 🧰 4. Real-World Example
 
 ```html
 <form>
@@ -244,7 +246,7 @@ cy.get('[data-cy="submit-btn"]').click()
 
 --- 
 
-## 🔄 5. BONUS: Chaining and Traversing
+### 🔄 5. BONUS: Chaining and Traversing
 Sometimes, you want to go deep inside elements. Example:
 
 ```js
@@ -259,7 +261,7 @@ cy.contains('Submit').click() // Select by visible text (very useful)
 
 ---
 
-## 🧼 Summary Cheatsheet:
+### 🧼 Summary Cheatsheet:
 
 ```js
 cy.get('tag')              // By tag
@@ -273,10 +275,11 @@ cy.get('parent').find('child') // Chaining
 
 ---
 
+# Assertions ->
 
 Let’s dive into Assertions in Cypress — what they are, how they work, and how to use them cleanly and quickly.
 
-## 🎯 1. What Are Assertions?
+### 🎯 1. What Are Assertions?
 Assertions are how you tell Cypress:
   -✅ "I expect this to be true!"
   -❌ If it’s not, the test fails.
@@ -285,7 +288,7 @@ They help you check if something happened as expected — like a button is visib
 
 ---
 
-## 🧪 2. Two Main Ways to Write Assertions
+### 🧪 2. Two Main Ways to Write Assertions
 
 - ✅ Method 1: .should(...)
 
@@ -305,9 +308,9 @@ They help you check if something happened as expected — like a button is visib
 
 ---
 
-## 🧠 3. Common .should() Assertions
+### 🧠 3. Common .should() Assertions
 
-## 🎯 Common Cypress Assertions Cheat Sheet
+🎯 Common Cypress Assertions Cheat Sheet
 
 | Assertion | Meaning | Example |
 |-----------|---------|---------|
@@ -320,7 +323,7 @@ They help you check if something happened as expected — like a button is visib
 | `'be.checked'` | Checkbox/radio is checked | `cy.get('[type="checkbox"]').should('be.checked')` |
 | `'not.exist'` | Element doesn't exist | `cy.get('.toast').should('not.exist')` |
 
-### 💡 Pro Tips:
+### 💡 4. Pro Tips:
 - Chain multiple assertions:  
   ```js
   cy.get('button')
@@ -331,7 +334,7 @@ They help you check if something happened as expected — like a button is visib
 
 ---
 
-## 4. ⚙️ Real Example: Login Form
+### ⚙️ 5. Real Example: Login Form
 
 ```js
 cy.get('[data-cy="username-input"]').type('ramavtar')
@@ -344,7 +347,7 @@ cy.get('[data-cy="welcome-msg"]').should('contain', 'Welcome, Ramavtar')
 
 ---
 
-## 5. 🔥 Bonus: Negation (not.)
+### 🔥 6. Bonus: Negation (not.)
 
 ```js
 cy.get('.error-msg').should('not.exist')
@@ -353,7 +356,7 @@ cy.get('button').should('not.be.disabled')
 
 ---
 
-## 6. 🎁 Extra Power: .and() for chaining
+### 🎁 7. Extra Power: .and() for chaining
 
 ```js
 cy.get('button')
@@ -364,7 +367,7 @@ cy.get('button')
 
 --- 
 
-## 🧼 Summary Cheatsheet
+### 🧼 Summary Cheatsheet
 
 ```js
 cy.get('.item').should('exist')
@@ -382,6 +385,8 @@ cy.get('.item').then($el => {
 
 ---
 
+# Hooks ->
+
 Let’s gooo! 🎣 Time to master Hooks in Cypress — they make your tests cleaner, organized, and DRY (Don't Repeat Yourself).
 
 ### 🎯 1. What are Hooks?
@@ -390,12 +395,12 @@ They're used for setup and teardown — like logging in, resetting a DB, or visi
 
 Think of it like:
 
--"Before every test, go to the login page"
--"After all tests, log something"
+- "Before every test, go to the login page"
+- "After all tests, log something"
 
 ---
 
-## 🧪 2. The 4 Main Hooks
+### 🧪 2. The 4 Main Hooks
 
 | Hook | When it Runs | Use Case | Example |
 |------|--------------|----------|---------|
@@ -406,7 +411,7 @@ Think of it like:
 
 ---
 
-## 🧠 3. Basic Examples
+### 🧠 3. Basic Examples
 
 - Example 1 :
   
@@ -479,17 +484,17 @@ describe('Login Flow', () => {
 
 ---
 
-## 4. 🔥 Pro Tips
+### 🔥 4. Pro Tips
 
--Use beforeEach() to visit the same page before each test.
+- Use beforeEach() to visit the same page before each test.
 
--Avoid doing everything inside before() — use it only for one-time setups.
+- Avoid doing everything inside before() — use it only for one-time setups.
 
--Combine with fixtures, API calls, and custom commands for advanced setups.
+- Combine with fixtures, API calls, and custom commands for advanced setups.
 
 ---
 
-## 5.💡 Summary Cheatsheet
+###💡 5. Summary Cheatsheet
 
 ```js
 before(() => { /* once before all */ })
@@ -497,3 +502,115 @@ beforeEach(() => { /* before every test */ })
 afterEach(() => { /* after every test */ })
 after(() => { /* once after all */ })
 ```
+
+
+---
+
+# Custom Commands ->
+
+## 🛠️ What are Custom Commands ?
+
+Custom commands let you create your own reusable Cypress functions — so you can avoid repeating code and keep your tests clean and readable.
+
+Think of them like creating your own cy.login() or cy.fillForm() that works just like built-in commands like cy.get() or cy.visit().
+
+### 🤔 1. Why Use Custom Commands?
+✅ Reuse code across multiple tests
+✅ Clean, readable, DRY (Don't Repeat Yourself) code
+✅ Easier test maintenance
+✅ Encapsulate logic (like login, signup, etc.)
+
+### 📍 2. Where to Define Custom Commands ?
+
+Inside:
+
+```bash
+cypress/support/commands.js
+```
+
+This file is automatically loaded by Cypress — no need to import it manually in each test file.
+
+
+### 🧪 Example 1: Custom Login Command:
+
+```js
+// Inside cypress/support/commands.js
+
+Cypress.Commands.add('login', (email, password) => {
+  cy.visit('/login')
+  cy.get('input[name="email"]').type(email)
+  cy.get('input[name="password"]').type(password)
+  cy.get('button[type="submit"]').click()
+})
+```
+
+
+Then use it in your test like this:
+
+```js
+// Inside any test file
+describe('Login Test', () => {
+  it('logs in successfully', () => {
+    cy.login('ramavtar@example.com', '123456')
+    cy.url().should('include', '/dashboard')
+  })
+})
+```
+
+BOOM 💥 — no need to repeat all those cy.get().type() lines every time.
+
+
+
+### 🧪 Example 2: Fill Signup Form
+
+```js
+// cypress/support/commands.js
+Cypress.Commands.add('fillSignupForm', (name, email, password) => {
+  cy.get('#name').type(name)
+  cy.get('#email').type(email)
+  cy.get('#password').type(password)
+  cy.get('#signup-btn').click()
+})
+```
+
+
+Usage:
+
+```js
+cy.fillSignupForm('Ramavtar', 'ram@example.com', 'pass123')
+```
+
+### 🔍 Best Practices
+
+✅ Prefix command names with action verbs like cy.fill, cy.do, cy.perform
+✅ Keep commands focused on one task
+✅ Add comments to describe what your command does
+✅ Use aliases if needed (e.g. cy.get('@userId'))
+
+### 🧪 You Can Also Add Overwrites
+
+You can even overwrite Cypress’s built-in commands (if needed):
+
+```js
+Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
+  // Add auth headers to every visit if needed
+  originalFn(url, {
+    ...options,
+    headers: { Authorization: 'Bearer my-token' },
+  })
+})
+```
+
+### ✅ Recap: Custom Commands in Cypress
+
+| Feature | Description | Example |
+|---------|-------------|---------|
+| `Cypress.Commands.add()` | Create your own custom command | `Cypress.Commands.add('login', (email, pw) => {...})` |
+| **Place** | `cypress/support/commands.js` | Where all custom commands live |
+| **Usage** | `cy.commandName(args)` | `cy.login('test@user.com', 'pass123')` |
+| **Benefit** | Reusable, clean, DRY test code | Write once, use everywhere |
+
+---
+
+
+
