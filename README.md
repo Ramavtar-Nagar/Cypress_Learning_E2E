@@ -4,6 +4,7 @@ A quick and beginner-friendly guide to get started with **Cypress** for testing 
 
 ---
 
+
 ## 🌀 1. What is Cypress?
 
 Cypress is a **JavaScript-based test automation tool** used to test web applications.
@@ -19,6 +20,7 @@ It’s mainly used for **End-to-End (E2E)** testing, but also supports **integra
 
 ---
 
+
 ## 🔥 2. Why Cypress?
 
 - 💡 Easy to learn (if you know JavaScript)  
@@ -28,6 +30,7 @@ It’s mainly used for **End-to-End (E2E)** testing, but also supports **integra
 - 🧼 Clean syntax (`cy.get().click()`)
 
 ---
+
 
 ## 📦 3. How to Install Cypress
 
@@ -45,6 +48,7 @@ npx cypress open
 
 ---
 
+
 ## 📁 4. Cypress Folder Structure
 
 Once Cypress is opened, it creates a cypress/ folder with:
@@ -58,6 +62,7 @@ Once Cypress is opened, it creates a cypress/ folder with:
 - cypress.config.js: configuration settings
 
 ---
+
 
 ## 🧪 5. Writing Your First Test
 
@@ -75,3 +80,93 @@ describe('My First Test', () => {
 
 ---
 
+
+## 6. 🎬 After Writing Your First Cypress Test — What Next?
+
+Once you’ve written your test file (example: cypress/e2e/my_first_test.cy.js), you’ll need to go back to the Cypress GUI and run it.
+Here’s how it works:
+
+✅ Step-by-Step:
+
+### 1. Open Cypress GUI
+If it’s not open, run this in your terminal:
+
+```bash
+npx cypress open
+```
+
+This will launch the Cypress Test Runner GUI.
+
+---
+
+### 2. Select the Type of Test
+
+Cypress will ask:
+
+🧪 "What type of testing do you want to do?"
+
+Choose:
+➡️ E2E Testing (End-to-End)
+
+You might need to configure it the first time — just follow the prompt and click through.
+
+---
+
+### 3. 🧭 Pick Your Browser
+
+When you run Cypress, it shows you a list like:
+
+- Chrome  
+- Edge  
+- Electron  
+- Firefox  
+
+👉 **Choose your preferred browser** (usually **Chrome** is the most stable).
+
+---
+
+### 4. ▶️ Run Your Test File
+
+Cypress now shows a list of test files inside the `cypress/e2e/` folder.
+
+➡️ **Click on your test file** — for example:  
+`my_first_test.cy.js`
+
+---
+
+### 5. 🎥 Watch the Magic!
+
+The browser opens and shows your test running in **real-time**, like a screen recording.
+
+You'll see:
+
+- 🧾 Each Cypress command on the **left** (`cy.visit()`, `cy.get()`, etc.)
+- 🖥️ What’s happening on the **screen** on the right
+- ✅ **Green** = Passed
+- ❌ **Red** = Failed
+
+---
+
+### 💡 Bonus Tip
+
+While it's running, you can **hover over each command** on the left — it will **highlight what was selected or clicked** in the browser view.
+
+🔍 It’s super helpful for **debugging**.
+
+---
+
+## 🧪 Visual Summary
+
+```bash
+npx cypress open
+↓
+Choose: E2E Testing
+↓
+Pick: Chrome / Firefox / etc.
+↓
+Select your test file
+↓
+Watch test run in browser!
+```
+
+---
