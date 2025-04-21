@@ -601,4 +601,17 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 })
 ```
 
+### ✅ Recap: Custom Commands in Cypress
+
+| Feature | Description | Example |
+|---------|-------------|---------|
+| `Cypress.Commands.add()` | Create your own custom command | `Cypress.Commands.add('login', (email, pw) => {...})` |
+| **Place** | `cypress/support/commands.js` | Where all custom commands live |
+| **Usage** | `cy.commandName(args)` | `cy.login('test@user.com', 'pass123')` |
+| **Benefit** | Reusable, clean, DRY test code | Write once, use everywhere |
+
+---
+
+
+
 
