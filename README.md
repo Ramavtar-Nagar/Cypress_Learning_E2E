@@ -524,7 +524,7 @@ after(() => { /* once after all */ })
 
 ---
 
-# Custom Commands ->
+# Custom Commands in Cypress ->
 
 ## 🛠️ What are Custom Commands ?
 
@@ -645,7 +645,7 @@ cy.login('ram@example.com', 'password123')
 
 ---
 
-# 🛠️ Fixtures in Cypress
+# 🛠️ Fixtures in Cypress ->
 
 ## 🔍 What are Fixtures?
 
@@ -765,7 +765,6 @@ it('uses fixture alias', function () {
 
 ## 🔁 What Are Aliases?
 Aliases in Cypress let you store values, elements, or fixture data for reuse later using @aliasName.
-
 You create an alias using .as('name'), and access it with cy.get('@name').
 
 ### 📌 1. Common Alias Use Cases
@@ -855,3 +854,115 @@ cy.get('selector').then(($el) => {
 
 ---
 
+# 🛠️ Environment Variables in Cypress
+
+## 🔍 What are Environment Variables in Cypress?
+They help keep your Cypress tests clean, flexible, and secure by separating configurable data from your test logic.
+
+### 🎯 1. Why Use Them?
+
+Environment variables allow you to store values like:
+
+- Base URLs
+
+- Credentials
+
+- API keys
+
+- Config flags (e.g. isProd, isMockEnabled)
+
+So you don’t hardcode them directly in your tests.
+
+### 📦 2. Defining Environment Variables
+
+#### 1. 🔧 In cypress.config.js
+
+```js
+const { defineConfig } = require("cypress");
+
+module.exports = defineConfig({
+  env: {
+    login_email: "ram@example.com",
+    login_password: "password123"
+  }
+});
+```
+
+✅ Use cypress.config.js when:
+- You want environment variables to be version-controlled.
+
+- The variables are non-sensitive and part of the standard config (e.g., flags, test modes).
+
+- You prefer having all config centralized.
+
+***
+
+#### 2. 📁 In cypress.env.json
+Create a file in your root directory:
+
+```json
+{
+  "login_email": "ram@example.com",
+  "login_password": "password123"
+}
+```
+🔒 This file is .gitignore-friendly for sensitive data.
+
+✅ Use cypress.env.json when:
+- You want to keep sensitive data out of version control (like credentials, API keys).
+
+- You want to separate config from code — clean & secure.
+
+- It’s ignored by default in .gitignore, so secrets stay safe.
+
+***
+
+### 🔍 3. Accessing Environment Variables
+In Test Files:
+```js
+const email = Cypress.env('login_email')
+const password = Cypress.env('login_password')
+
+cy.get('#email').type(email)
+cy.get('#password').type(password)
+```
+
+With Default Fallback:
+```js
+const mode = Cypress.env('mode') || 'development'
+```
+
+### 🚀 4. Passing Env Vars via CLI (for CI/CD)
+```bash
+npx cypress run --env login_email=ram@example.com,login_password=password123
+```
+
+### 👨‍💻 6. Use Case: Dynamic Login
+```js
+cy.visit('/login')
+cy.get('#email').type(Cypress.env('login_email'))
+cy.get('#password').type(Cypress.env('login_password'))
+cy.get('form').submit()
+```
+
+### 🧾 7. Environment Variables – Summary Cheatsheet
+```js
+// Access env variable
+Cypress.env('variableName')
+
+// In cypress.config.js
+env: {
+  key: "value"
+}
+
+// In cypress.env.json
+{
+  "key": "value"
+}
+
+// From CLI
+npx cypress run --env key=value
+
+// With fallback
+const val = Cypress.env('key') || 'defaultValue'
+```
