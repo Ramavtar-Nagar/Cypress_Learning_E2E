@@ -966,3 +966,8 @@ npx cypress run --env key=value
 // With fallback
 const val = Cypress.env('key') || 'defaultValue'
 ```
+
+🔐 Best Practice:
+Use cypress.env.json for secrets, and use cypress.config.js for public config flags or default values.
+
+---
