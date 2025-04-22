@@ -641,6 +641,7 @@ cy.fillSignupForm('Ramavtar', 'ram@example.com', 'pass123')
 ### 🧪 6. You Can Also Add Overwrites
 
 You can even overwrite Cypress’s built-in commands (if needed):
+Don't worry if you are not able to understand this ( we’ll see this in the next topics )
 
 ```js
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
@@ -724,8 +725,8 @@ describe('Using Fixtures', () => {
 ```
 
 ### 🔁 4. Using Fixtures with Aliases
-Don't worry if you do not know about aliases ( we’ll see this in the next topics )
 You can also alias the data for reuse:
+Don't worry if you do not know about aliases ( we’ll see this in the next topics )
 
 ```js
 beforeEach(() => {
