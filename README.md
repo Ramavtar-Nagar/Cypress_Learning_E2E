@@ -545,7 +545,7 @@ describe('Login Flow', () => {
 
 ---
 
-###💡 5. Summary Cheatsheet
+### 💡 5. Summary Cheatsheet
 
 ```js
 before(() => { /* once before all */ })
@@ -582,7 +582,7 @@ cypress/support/commands.js
 This file is automatically loaded by Cypress — no need to import it manually in each test file.
 
 
-### 🧪 Example 1: Custom Login Command:
+### 🧪 3. Example 1: Custom Login Command:
 
 ```js
 // Inside cypress/support/commands.js
@@ -612,7 +612,7 @@ BOOM 💥 — no need to repeat all those cy.get().type() lines every time.
 
 
 
-### 🧪 Example 2: Fill Signup Form
+### 🧪 4. Example 2: Fill Signup Form
 
 ```js
 // cypress/support/commands.js
@@ -631,14 +631,14 @@ Usage:
 cy.fillSignupForm('Ramavtar', 'ram@example.com', 'pass123')
 ```
 
-### 🔍 Best Practices
+### 🔍 5. Best Practices
 
 - ✅ Prefix command names with action verbs like cy.fill, cy.do, cy.perform
 - ✅ Keep commands focused on one task
 - ✅ Add comments to describe what your command does
 - ✅ Use aliases if needed (e.g. cy.get('@userId'))
 
-### 🧪 You Can Also Add Overwrites
+### 🧪 6. You Can Also Add Overwrites
 
 You can even overwrite Cypress’s built-in commands (if needed):
 
@@ -652,7 +652,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 })
 ```
 
-### ✅ Recap: Custom Commands in Cypress
+### ✅ 7. Recap: Custom Commands in Cypress
 
 | Feature | Description | Example |
 |---------|-------------|---------|
@@ -661,8 +661,137 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 | **Usage** | `cy.commandName(args)` | `cy.login('test@user.com', 'pass123')` |
 | **Benefit** | Reusable, clean, DRY test code | Write once, use everywhere |
 
+### 🧾 8. Custom Commands – Summary Cheatsheet
+
+```js
+// ✅ Define a custom command in cypress/support/commands.js
+Cypress.Commands.add('login', (email, password) => {
+  cy.get('#email').type(email)
+  cy.get('#password').type(password)
+  cy.get('form').submit()
+})
+
+// ✅ Use the custom command in your test
+cy.login('ram@example.com', 'password123')
+```
+
 ---
 
+# 🛠️ Fixtures in Cypress
+
+## 🔍 What are Fixtures?
+
+Fixtures are external files (usually JSON, but can also be .txt, .csv, etc.) that contain test data. They help you separate test logic from test data, making your tests cleaner and easier to maintain.
+
+### 📂 1. Where Do Fixtures Live ?
+Cypress expects fixture files to be in the cypress/fixtures/ directory.
+
+Example:
+```pgsql
+cypress/
+  fixtures/
+    user.json
+```
+
+### 📄 2. Example Fixture File: user.json
+
+```json
+{
+  "name": "Avatar",
+  "email": "avatar@example.com",
+  "password": "password123"
+}
+```
+
+### ✅ 3. How to Use Fixtures
+
+You can load this data inside your test using the cy.fixture() command:
+
+```js
+describe('Using Fixtures', () => {
+  it('logs in using fixture data', () => {
+    cy.fixture('user').then((userData) => {
+      cy.visit('/login');
+
+      cy.get('#email').type(userData.email);
+      cy.get('#password').type(userData.password);
+      cy.get('form').submit();
+
+      cy.contains('Welcome, Ram').should('be.visible');
+    });
+  });
+});
+```
+
+### 🔁 4. Using Fixtures with Aliases
+Don't worry if you do not know about aliases ( we’ll see this in the next topics )
+You can also alias the data for reuse:
+
+```js
+beforeEach(() => {
+  cy.fixture('user').as('user');
+});
+
+it('uses aliased fixture data', function () {
+  cy.visit('/login');
+
+  cy.get('#email').type(this.user.email);
+  cy.get('#password').type(this.user.password);
+  cy.get('form').submit();
+
+  cy.contains(`Welcome, ${this.user.name}`).should('be.visible');
+});
+```
+
+💡 Note the use of function() instead of arrow functions so this context is preserved.
+
+### 🧠 5. Why Use Fixtures?
+
+- Reusability: Share data across multiple tests.
+
+- Maintainability: Update data in one place.
+
+- Cleaner code: Keep tests focused on behavior, not data setup.
+
+
+### 💡 6. Pro Tips
+
+- Use JSON for structured data.
+
+- Use .txt or .csv for raw content if needed.
+
+- Combine fixtures with cy.intercept() to mock APIs ( we’ll see this in the next topics ).
+
+
+### 🧾 7. Fixtures – Summary Cheatsheet
+
+```js
+// Load fixture data once inside a test
+cy.fixture('fileName').then((data) => {
+  // use data
+})
+
+// Load fixture and alias it
+beforeEach(() => {
+  cy.fixture('fileName').as('aliasName')
+})
+
+// Use alias (with function() to access this.aliasName)
+it('uses fixture alias', function () {
+  cy.get('selector').type(this.aliasName.key)
+})
+
+// Example fixture file: cypress/fixtures/user.json
+/*
+{
+  "name": "Avatar",
+  "email": "avatar@example.com",
+  "password": "password123"
+}
+*/
+```
+
+---
 
 
 
