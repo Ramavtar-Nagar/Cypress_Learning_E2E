@@ -53,8 +53,6 @@ Each topic includes practical examples and best practices to help you implement 
 
 ---
 
----
-
 
 # Basics ->
 
@@ -71,8 +69,6 @@ You can write tests that:
 
 It’s mainly used for **End-to-End (E2E)** testing, but also supports **integration** and **component** testing.
 
----
-
 
 ### 🔥 2. Why Cypress?
 
@@ -81,8 +77,6 @@ It’s mainly used for **End-to-End (E2E)** testing, but also supports **integra
 - 🧪 Interactive GUI (you see what’s happening!)  
 - 📦 Everything runs in the browser (no WebDriver needed)  
 - 🧼 Clean syntax (`cy.get().click()`)
-
----
 
 
 ### 📦 3. How to Install Cypress
@@ -99,8 +93,6 @@ Then open Cypress GUI:
 npx cypress open
 ```
 
----
-
 
 ### 📁 4. Cypress Folder Structure
 
@@ -113,8 +105,6 @@ Once Cypress is opened, it creates a cypress/ folder with:
 - support/: reusable commands
 
 - cypress.config.js: configuration settings
-
----
 
 
 ### 🧪 5. Writing Your First Test
@@ -150,7 +140,6 @@ npx cypress open
 
 This will launch the Cypress Test Runner GUI.
 
----
 
 ### 2. Select the Type of Test
 
@@ -163,7 +152,6 @@ Choose:
 
 You might need to configure it the first time — just follow the prompt and click through.
 
----
 
 ### 3. 🧭 Pick Your Browser
 
@@ -176,7 +164,6 @@ When you run Cypress, it shows you a list like:
 
 👉 **Choose your preferred browser** (usually **Chrome** is the most stable).
 
----
 
 ### 4. ▶️ Run Your Test File
 
@@ -185,7 +172,6 @@ Cypress now shows a list of test files inside the `cypress/e2e/` folder.
 ➡️ **Click on your test file** — for example:  
 `my_first_test.cy.js`
 
----
 
 ### 5. 🎥 Watch the Magic!
 
@@ -198,7 +184,6 @@ You'll see:
 - ✅ **Green** = Passed
 - ❌ **Red** = Failed
 
----
 
 ### 6.💡 Bonus Tip
 
@@ -206,7 +191,6 @@ While it's running, you can **hover over each command** on the left — it will 
 
 🔍 It’s super helpful for **debugging**.
 
----
 
 ### 7. 🧪 Visual Summary
 
