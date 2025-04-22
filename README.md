@@ -231,7 +231,6 @@ Watch test run in browser!
 
 A quick guide to mastering **element selection** in Cypress for reliable and maintainable tests.
 
----
 
 ### ✅ 1. What are Selectors in Cypress?
 
@@ -241,7 +240,6 @@ A quick guide to mastering **element selection** in Cypress for reliable and mai
   "Hey Cypress, **click this button!**"  
   But you need to **point correctly** so Cypress finds the right element.
 
----
 
 ### 🧪 2. The Most Common Selectors in Cypress
 
@@ -253,7 +251,6 @@ cy.get('[name="email"]')   // Select by attribute
 cy.get('[data-cy="login"]') // 🏆 Best practice: data-cy selector
 ```
 
---- 
 
 ### 🧠 3. Best Practices for Selectors
 
@@ -264,7 +261,6 @@ cy.get('[data-cy="login"]') // 🏆 Best practice: data-cy selector
 | Short, readable selectors       | `div > form > div:nth-child(3) > button` |
 | Reusable selectors             | Duplicated selectors everywhere      |
 
----
 
 👉  Why data-cy is best?
 Because it's only for testing - developers won't accidentally change it!
@@ -277,7 +273,6 @@ Because it's only for testing - developers won't accidentally change it!
 cy.get('[data-cy="login-btn"]').click()
 ```
 
----
 
 ### 🧰 4. Real-World Example
 
@@ -295,7 +290,6 @@ cy.get('[data-cy="password-input"]').type('123456')
 cy.get('[data-cy="submit-btn"]').click()
 ```
 
---- 
 
 ### 🔄 5. BONUS: Chaining and Traversing
 Sometimes, you want to go deep inside elements. Example:
@@ -310,7 +304,6 @@ or:
 cy.contains('Submit').click() // Select by visible text (very useful)
 ```
 
----
 
 ### 🧼 Summary Cheatsheet:
 
@@ -337,7 +330,6 @@ Assertions are how you tell Cypress:
 
 They help you check if something happened as expected — like a button is visible, or text is correct.
 
----
 
 ### 🧪 2. Two Main Ways to Write Assertions
 
@@ -357,7 +349,6 @@ They help you check if something happened as expected — like a button is visib
     })
   ```
 
----
 
 ### 🧠 3. Common .should() Assertions
 
@@ -382,8 +373,7 @@ They help you check if something happened as expected — like a button is visib
     .and('contain', 'Submit')
     .and('not.be.disabled')
   ```
-
----
+  
 
 ### ⚙️ 5. Real Example: Login Form
 
@@ -396,7 +386,6 @@ cy.get('[data-cy="submit-btn"]').click()
 cy.get('[data-cy="welcome-msg"]').should('contain', 'Welcome, Ramavtar')
 ```
 
----
 
 ### 🔥 6. Bonus: Negation (not.)
 
@@ -405,7 +394,6 @@ cy.get('.error-msg').should('not.exist')
 cy.get('button').should('not.be.disabled')
 ```
 
----
 
 ### 🎁 7. Extra Power: .and() for chaining
 
@@ -416,7 +404,6 @@ cy.get('button')
   .and('not.be.disabled')
 ```
 
---- 
 
 ### 🧼 Summary Cheatsheet
 
@@ -449,7 +436,6 @@ Think of it like:
 - "Before every test, go to the login page"
 - "After all tests, log something"
 
----
 
 ### 🧪 2. The 4 Main Hooks
 
@@ -460,7 +446,6 @@ Think of it like:
 | `afterEach()` | After every test case | Cleanup | Take screenshot, clear cookies |
 | `after()` | Once after all tests | Final teardown | Logout, generate reports |
 
----
 
 ### 🧠 3. Basic Examples
 
@@ -533,7 +518,6 @@ describe('Login Flow', () => {
 })
 ```
 
----
 
 ### 🔥 4. Pro Tips
 
@@ -543,7 +527,6 @@ describe('Login Flow', () => {
 
 - Combine with fixtures, API calls, and custom commands for advanced setups.
 
----
 
 ### 💡 5. Summary Cheatsheet
 
@@ -794,5 +777,97 @@ it('uses fixture alias', function () {
 
 ---
 
+# 🛠️ Aliases & .then() in Cypress ->
 
+## 🔁 What Are Aliases?
+Aliases in Cypress let you store values, elements, or fixture data for reuse later using @aliasName.
+
+You create an alias using .as('name'), and access it with cy.get('@name').
+
+### 📌 1. Common Alias Use Cases
+
+- ✅ Aliasing DOM elements:
+  ```js
+    cy.get('input#email').as('emailInput')
+    cy.get('@emailInput').type('ram@example.com')
+  ```
+  
+- ✅ Aliasing fixture data:
+  ```js
+    cy.fixture('user').as('userData')
+  
+    it('uses alias for fixture', function () {
+      cy.get('@userData').then((data) => {
+        cy.get('#email').type(data.email)
+      })
+    })
+  ```
+- ✅ Aliasing intercepted API calls:
+  ```js
+  cy.intercept('GET', '/api/user').as('getUser')
+  cy.wait('@getUser')
+  ```
+
+### ⏳ 3. .then() – Handling Async Data
+.then() is a Cypress command used to work with resolved values from a previous command.
+
+📌 Example:
+```js
+  cy.get('h1').then(($h1) => {
+    const text = $h1.text()
+    expect(text).to.equal('Welcome')
+  })
+```
+
+Use .then() when:
+
+- You need to extract a value
+
+- You need to do custom logic
+
+- You’re chaining async behavior
+
+💡 Tip: .then() gives you direct access to the resolved subject.
+
+### 🔀 4. Aliases + .then() = 💥
+
+```js
+  beforeEach(() => {
+  cy.fixture('user').as('user')
+})
+
+it('logs in using aliased data', function () {
+  cy.get('@user').then((user) => {
+    cy.get('#email').type(user.email)
+    cy.get('#password').type(user.password)
+    cy.get('form').submit()
+  })
+})
+
+```
+
+### 🧾 5. Aliases & .then() – Summary Cheatsheet
+```js
+// Alias DOM elements
+cy.get('selector').as('aliasName')
+cy.get('@aliasName').type('value')
+
+// Alias fixtures
+cy.fixture('fileName').as('aliasName')
+cy.get('@aliasName').then((data) => {
+  // use data
+})
+
+// Alias network request
+cy.intercept('GET', '/api/endpoint').as('alias')
+cy.wait('@alias')
+
+// .then() to handle resolved data
+cy.get('selector').then(($el) => {
+  const text = $el.text()
+  expect(text).to.include('Hello')
+})
+```
+
+---
 
