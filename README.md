@@ -971,3 +971,187 @@ const val = Cypress.env('key') || 'defaultValue'
 Use cypress.env.json for secrets, and use cypress.config.js for public config flags or default values.
 
 ---
+
+# 🌐 Network Requests – cy.intercept()
+
+### 🧐 1. What is cy.intercept()?
+
+cy.intercept() allows you to:
+
+- Monitor network calls
+
+- Stub/mock API responses
+
+- Wait for requests before continuing
+
+- Assert on request/response data
+
+It replaced the old cy.route() and is way more powerful.
+
+### 🔍 2. What’s the Goal?
+
+- When your web app calls an API (like /api/login or /api/products), you might want to:
+
+- See if the request is being made correctly
+
+- Make your tests faster by avoiding real API calls
+
+- Test how your app reacts to different server responses (success, error, empty data)
+
+- Stop depending on a real server or live database to test
+
+That’s what cy.intercept() is for.
+
+### 🛠️ 3. Basic Syntax
+
+```js
+cy.intercept(method, url, routeHandler?)
+```
+
+- method: 'GET', 'POST', 'PUT', etc.
+
+- url: exact string or pattern (/api/users, /api/*)
+
+- routeHandler: (optional) to stub or modify the response
+
+
+### 🔧 4. Think of cy.intercept() like a "traffic controller":
+
+It lets you:
+
+- Watch network calls 🚦  
+
+- Change the response that your app receives 🛠️  
+
+- Wait for a network call before moving forward ⏳  
+
+## ✅ Let's Understand Each Use Case with Real-Life Style Examples: 
+
+### 🧪 1. Just Watching a Request (no mocking)
+
+Scenario: You visit a page and want to check if the frontend hits /api/users.
+
+```js
+cy.intercept('GET', '/api/users').as('getUsers') // watch the request
+cy.visit('/dashboard') // page loads and triggers the call
+cy.wait('@getUsers') // wait until the request is made
+```
+
+📌 Use this when you want to wait for the request to finish or assert it was called.
+
+
+### 🧪 2. Mocking the Response (fake data)
+
+Scenario: You want to skip the actual backend and return fake data.
+
+```js
+cy.intercept('GET', '/api/users', {
+  statusCode: 200,
+  body: [{ id: 1, name: 'Ram' }]
+}).as('mockUsers')
+```
+
+📌 This will make Cypress return this fake data when your app calls /api/users.
+
+⭐ Great for testing the UI when:
+
+-  You don’t want to depend on the backend
+
+-  The backend is not ready yet
+
+-  You want consistent data in tests
+
+### 🧪 3. Using a JSON Fixture File as a Response
+
+Scenario: You have a file users.json with sample users inside cypress/fixtures.
+
+```json
+// cypress/fixtures/users.json
+[
+  { "id": 1, "name": "Ram" },
+  { "id": 2, "name": "Shyam" }
+]
+```
+
+⭐ Then in your test:
+
+```js
+cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('usersList')
+```
+
+📌 Easier to manage large or reusable mock data.
+
+### 🧪 4. Intercepting POST Requests & Checking Data Sent
+
+Scenario: You want to test login. Make sure your app sends the correct email/password and gets a token back.
+
+```js
+cy.intercept('POST', '/api/login', (req) => {
+  expect(req.body.email).to.equal('ram@example.com')
+  req.reply({
+    statusCode: 200,
+    body: { token: 'abc123' }
+  })
+}).as('loginRequest')
+```
+
+📌 This:
+
+- Verifies the frontend is sending the right data
+
+- Gives a fake login success response to move test forward
+
+### 🧪 5. Wait for Request + Check the Response
+
+After your app sends a request, you can wait() and then check the result:
+
+```js
+cy.wait('@loginRequest').then((interception) => {
+  expect(interception.response.statusCode).to.eq(200)
+  expect(interception.response.body.token).to.exist
+})
+```
+
+📌 Useful to confirm:
+
+- The server responded correctly
+
+- The app handled it properly
+
+### ✅ 6. Common Real-World Use Cases
+
+| Use Case                     | What to Do                                           |
+|-----------------------------|------------------------------------------------------|
+| Wait for backend data to load | `cy.intercept()` + `cy.wait()`                     |
+| Fake login/logout flows      | Intercept `POST /login` and return a mock token     |
+| Test empty list / errors     | Intercept and send `{}` or a `500` error            |
+| Avoid real API calls in CI   | Intercept all APIs and return stubbed responses     |
+
+
+### 🧾 7. Cheatsheet – Network Requests Summary
+
+```js
+// Just watch a request (no mock)
+cy.intercept('GET', '/api/data').as('apiData')
+cy.wait('@apiData')
+
+// Mock a response (inline)
+cy.intercept('GET', '/api/data', {
+  statusCode: 200,
+  body: { message: 'Mocked data here' }
+}).as('mockData')
+
+// Use fixture file
+cy.intercept('GET', '/api/data', { fixture: 'data.json' }).as('fixtureData')
+
+// Intercept POST and validate request
+cy.intercept('POST', '/api/login', (req) => {
+  expect(req.body.email).to.eq('ram@example.com')
+  req.reply({ statusCode: 200, body: { token: 'xyz' } })
+}).as('login')
+
+// Wait + check the response
+cy.wait('@login').then((interception) => {
+  expect(interception.response.statusCode).to.eq(200)
+})
+```
