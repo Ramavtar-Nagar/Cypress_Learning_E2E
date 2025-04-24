@@ -1125,6 +1125,10 @@ cy.wait('@loginRequest').then((interception) => {
 | Wait for backend data to load | `cy.intercept()` + `cy.wait()`                     |
 | Fake login/logout flows      | Intercept `POST /login` and return a mock token     |
 | Test empty list / errors     | Intercept and send `{}` or a `500` error            |
+| Avoid real API calls in CI   | Intercept all APIs and return stubbed responses     |
+
+
+### 🧾 7. Cheatsheet – Network Requests Summary
 
 ```js
 // Just watch a request (no mock)
