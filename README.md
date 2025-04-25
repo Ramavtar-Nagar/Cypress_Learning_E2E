@@ -1155,3 +1155,5 @@ cy.wait('@login').then((interception) => {
   expect(interception.response.statusCode).to.eq(200)
 })
 ```
+
+
