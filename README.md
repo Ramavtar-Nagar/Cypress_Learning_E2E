@@ -1141,6 +1141,7 @@ cy.intercept('GET', '/api/data', {
   body: { message: 'Mocked data here' }
 }).as('mockData')
 
+
 // Use fixture file
 cy.intercept('GET', '/api/data', { fixture: 'data.json' }).as('fixtureData')
 
